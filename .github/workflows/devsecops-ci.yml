@@ -38,10 +38,14 @@ jobs:
         run: ./mvnw -B test
 
       
+      
       - name: Scan dependencies for vulnerabilities
+        env:
+          NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
         run: >
           ./mvnw -B
           org.owasp:dependency-check-maven:12.1.0:check
+          -DnvdApiKeyEnvironmentVariable=NVD_API_KEY
           -DfailBuildOnCVSS=11
           -Dformat=HTML
           -DoutputDirectory=reports
