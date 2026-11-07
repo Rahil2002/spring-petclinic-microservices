@@ -36,3 +36,14 @@ jobs:
 
       - name: Run Maven tests
         run: ./mvnw -B test
+
+      - name: Scan dependencies for vulnerabilities
+        uses: dependency-check/Dependency-Check_Action@main
+        id: dependency-check
+        with:
+          project: 'spring-petclinic-microservices'
+          path: '.'
+          format: 'HTML'
+          out: 'reports'
+          args: >
+            --failOnCVSS 11
